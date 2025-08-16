@@ -1,0 +1,31 @@
+#docker exec -it base-backend-mysql mysql -u root -p
+# Tạo database
+#  CREATE DATABASE base_db;
+#  EXIT;
+
+version: "3.4"
+
+services:
+  mysql:
+    container_name: haidaiphat-backend-mysql
+    hostname: mysql
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root_password}
+      MYSQL_DATABASE: ${DB_NAME:-haidaiphat_db}
+    volumes:
+      - mysql:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "3307:3306"
+    networks:
+      - haidaiphat-backend-app
+    restart: unless-stopped
+
+volumes:
+  mysql:
+    driver: local
+
+networks:
+  haidaiphat-backend-app:
+    driver: bridge
