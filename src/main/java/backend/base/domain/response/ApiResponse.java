@@ -10,7 +10,12 @@ public class ApiResponse<T> {
     
     // Constructors
     public ApiResponse() {}
-    
+
+    public ApiResponse(String message, T data) {
+        this.message = message;
+        this.data = data;
+    }
+
     public ApiResponse(String code, String message, T data) {
         this.code = code;
         this.message = message;
