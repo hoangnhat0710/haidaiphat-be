@@ -29,6 +29,9 @@ public class News {
     @JoinColumn(name = "news_category_id")
     private NewsCategory newsCategory;
 
+    @Enumerated(EnumType.STRING)
+    private NewsType type = NewsType.GENERAL; // Loại tin tức
+
     private String tags; // Dạng chuỗi: "bds,dat nen"
     private String keywords; // Dạng chuỗi: "mua bán nhà, đầu tư"
 
@@ -36,4 +39,11 @@ public class News {
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
 
+    public enum NewsType {
+        GENERAL,                    // Tin tức chung
+        PROPERTY_MANAGEMENT,        // Quản lý vận hành chung cư, tòa nhà văn phòng, TTTM
+        CLEANING_SERVICE,           // Dịch vụ vệ sinh tòa nhà
+        SECURITY_SERVICE,           // Dịch vụ bảo vệ tòa nhà
+        SPORTS_SERVICE              // Kinh doanh dịch vụ thể thao
+    }
 }

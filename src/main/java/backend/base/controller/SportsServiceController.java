@@ -11,18 +11,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/news")
-public class NewsController {
+@RequestMapping("/sports-service")
+public class SportsServiceController {
 
     @Autowired
     private NewsService newsService;
 
     @GetMapping
-    public ResponseEntity<ApiResponse<NewsListResponseDTO>> getAllNews(
+    public ResponseEntity<ApiResponse<NewsListResponseDTO>> getAllSportsService(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size
     ) {
-        Page<News> newsPage = newsService.getNewsByType(News.NewsType.GENERAL, page, size);
+        Page<News> newsPage = newsService.getNewsByType(News.NewsType.SPORTS_SERVICE, page, size);
         NewsListResponseDTO response = new NewsListResponseDTO(
                 newsPage.getContent(),
                 newsPage.getNumber(),
@@ -34,28 +34,28 @@ public class NewsController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<News>> getNewsById(@PathVariable Integer id) {
-        return newsService.getNewsByIdAndType(id, News.NewsType.GENERAL)
+    public ResponseEntity<ApiResponse<News>> getSportsServiceById(@PathVariable Integer id) {
+        return newsService.getNewsByIdAndType(id, News.NewsType.SPORTS_SERVICE)
                 .map(news -> ResponseEntity.ok(new ApiResponse<>(null, news)))
                 .orElse(ResponseEntity.ok(new ApiResponse<>("Không tìm thấy tin tức", null)));
     }
 
     @PostMapping
-    public ResponseEntity<ApiResponse<News>> createNews(@RequestBody NewsRequestDTO newsRequestDTO) {
+    public ResponseEntity<ApiResponse<News>> createSportsService(@RequestBody NewsRequestDTO newsRequestDTO) {
         return ResponseEntity.ok(new ApiResponse<>("Tạo tin tức thành công", 
-                newsService.createNewsWithType(newsRequestDTO, News.NewsType.GENERAL)));
+                newsService.createNewsWithType(newsRequestDTO, News.NewsType.SPORTS_SERVICE)));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse<News>> updateNews(@PathVariable Integer id, @RequestBody NewsRequestDTO newsRequestDTO) {
-        return newsService.updateNewsWithType(id, newsRequestDTO, News.NewsType.GENERAL)
+    public ResponseEntity<ApiResponse<News>> updateSportsService(@PathVariable Integer id, @RequestBody NewsRequestDTO newsRequestDTO) {
+        return newsService.updateNewsWithType(id, newsRequestDTO, News.NewsType.SPORTS_SERVICE)
                 .map(updatedNews -> ResponseEntity.ok(new ApiResponse<>("Cập nhật tin tức thành công", updatedNews)))
                 .orElse(ResponseEntity.ok(new ApiResponse<>("Không tìm thấy tin tức", null)));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponse<Void>> deleteNews(@PathVariable Integer id) {
-        if (newsService.deleteNewsWithType(id, News.NewsType.GENERAL)) {
+    public ResponseEntity<ApiResponse<Void>> deleteSportsService(@PathVariable Integer id) {
+        if (newsService.deleteNewsWithType(id, News.NewsType.SPORTS_SERVICE)) {
             return ResponseEntity.ok(new ApiResponse<>("Xóa tin tức thành công", null));
         }
         return ResponseEntity.ok(new ApiResponse<>("Không tìm thấy tin tức", null));
@@ -63,7 +63,7 @@ public class NewsController {
 
     @PatchMapping("/{id}/view-count")
     public ResponseEntity<ApiResponse<Void>> increaseViewCount(@PathVariable Integer id) {
-        newsService.increaseViewCountWithType(id, News.NewsType.GENERAL);
+        newsService.increaseViewCountWithType(id, News.NewsType.SPORTS_SERVICE);
         return ResponseEntity.ok(new ApiResponse<>("Tăng view thành công", null));
     }
-}
+} 

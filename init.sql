@@ -40,6 +40,7 @@ CREATE TABLE IF NOT EXISTS news (
     description TEXT,
     content_html LONGTEXT,
     news_category_id INT,
+    type ENUM('GENERAL', 'PROPERTY_MANAGEMENT', 'CLEANING_SERVICE', 'SECURITY_SERVICE', 'SPORTS_SERVICE') DEFAULT 'GENERAL',
     tags VARCHAR(500),
     keywords VARCHAR(500),
     view_count INT DEFAULT 0,
