@@ -66,4 +66,21 @@ public class NewsController {
         newsService.increaseViewCountWithType(id, News.NewsType.GENERAL);
         return ResponseEntity.ok(new ApiResponse<>("Tăng view thành công", null));
     }
+
+    @GetMapping("/search")
+    public ResponseEntity<ApiResponse<NewsListResponseDTO>> searchNewsByKeyword(
+            @RequestParam String keyword,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
+        Page<News> newsPage = newsService.searchNewsByTitle(keyword, page, size);
+        NewsListResponseDTO response = new NewsListResponseDTO(
+                newsPage.getContent(),
+                newsPage.getNumber(),
+                newsPage.getTotalPages(),
+                newsPage.getTotalElements(),
+                newsPage.getSize()
+        );
+        return ResponseEntity.ok(new ApiResponse<>(null, response));
+    }
 }

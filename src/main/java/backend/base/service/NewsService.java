@@ -164,5 +164,17 @@ public class NewsService {
             newsRepository.save(news);
         });
     }
+
+    // Search news by title
+    public Page<News> searchNewsByTitle(String title, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt"));
+        return newsRepository.searchByTitle(title, pageable);
+    }
+
+    // Search news by title with type filter
+    public Page<News> searchNewsByTitleAndType(String title, News.NewsType type, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt"));
+        return newsRepository.searchByTitleAndType(title, type, pageable);
+    }
 }
 
