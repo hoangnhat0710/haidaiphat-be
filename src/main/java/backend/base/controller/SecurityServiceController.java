@@ -20,9 +20,10 @@ public class SecurityServiceController {
     @GetMapping
     public ResponseEntity<ApiResponse<NewsListResponseDTO>> getAllSecurityService(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "desc") String sortBy
     ) {
-        Page<News> newsPage = newsService.getNewsByType(News.NewsType.SECURITY_SERVICE, page, size);
+        Page<News> newsPage = newsService.getNewsByType(News.NewsType.SECURITY_SERVICE, page, size, sortBy);
         NewsListResponseDTO response = new NewsListResponseDTO(
                 newsPage.getContent(),
                 newsPage.getNumber(),

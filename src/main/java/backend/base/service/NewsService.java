@@ -99,6 +99,13 @@ public class NewsService {
         return newsRepository.findByType(type, pageable);
     }
 
+    public Page<News> getNewsByType(News.NewsType type, int page, int size, String sortBy) {
+        Sort.Direction direction = "asc".equalsIgnoreCase(sortBy) ? 
+            Sort.Direction.ASC : Sort.Direction.DESC;
+        Pageable pageable = PageRequest.of(page, size, Sort.by(direction, "createdAt"));
+        return newsRepository.findByType(type, pageable);
+    }
+
     public Optional<News> getNewsByIdAndType(Integer id, News.NewsType type) {
         return newsRepository.findByNewsIdAndType(id, type);
     }
@@ -168,6 +175,13 @@ public class NewsService {
     // Search news by title
     public Page<News> searchNewsByTitle(String title, int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt"));
+        return newsRepository.searchByTitle(title, pageable);
+    }
+
+    public Page<News> searchNewsByTitle(String title, int page, int size, String sortBy) {
+        Sort.Direction direction = "asc".equalsIgnoreCase(sortBy) ? 
+            Sort.Direction.ASC : Sort.Direction.DESC;
+        Pageable pageable = PageRequest.of(page, size, Sort.by(direction, "createdAt"));
         return newsRepository.searchByTitle(title, pageable);
     }
 

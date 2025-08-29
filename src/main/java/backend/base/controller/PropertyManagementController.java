@@ -20,9 +20,10 @@ public class PropertyManagementController {
     @GetMapping
     public ResponseEntity<ApiResponse<NewsListResponseDTO>> getAllPropertyManagement(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "desc") String sortBy
     ) {
-        Page<News> newsPage = newsService.getNewsByType(News.NewsType.PROPERTY_MANAGEMENT, page, size);
+        Page<News> newsPage = newsService.getNewsByType(News.NewsType.PROPERTY_MANAGEMENT, page, size, sortBy);
         NewsListResponseDTO response = new NewsListResponseDTO(
                 newsPage.getContent(),
                 newsPage.getNumber(),

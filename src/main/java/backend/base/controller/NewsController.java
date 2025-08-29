@@ -20,9 +20,10 @@ public class NewsController {
     @GetMapping
     public ResponseEntity<ApiResponse<NewsListResponseDTO>> getAllNews(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "desc") String sortBy
     ) {
-        Page<News> newsPage = newsService.getNewsByType(News.NewsType.GENERAL, page, size);
+        Page<News> newsPage = newsService.getNewsByType(News.NewsType.GENERAL, page, size, sortBy);
         NewsListResponseDTO response = new NewsListResponseDTO(
                 newsPage.getContent(),
                 newsPage.getNumber(),
@@ -71,9 +72,10 @@ public class NewsController {
     public ResponseEntity<ApiResponse<NewsListResponseDTO>> searchNewsByKeyword(
             @RequestParam String keyword,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "desc") String sortBy
     ) {
-        Page<News> newsPage = newsService.searchNewsByTitle(keyword, page, size);
+        Page<News> newsPage = newsService.searchNewsByTitle(keyword, page, size, sortBy);
         NewsListResponseDTO response = new NewsListResponseDTO(
                 newsPage.getContent(),
                 newsPage.getNumber(),
